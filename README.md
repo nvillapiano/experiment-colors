@@ -1,5 +1,5 @@
-# project-name
-Brief description of project
+# Experiment - Colors
+Playing around with Sass `@for` mixins
 
 ## Dependencies
 
