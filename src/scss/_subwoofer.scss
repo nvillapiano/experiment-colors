@@ -12,7 +12,6 @@ html, body {
 
 .speaker {
     @include absolute-center;
-    // animation: undulate 5s infinite;
     background: black;
 
     &.animate {
@@ -20,51 +19,39 @@ html, body {
     }
 }
 
-@for $i from 1 through 20 {
-    // $blue: blue;
-    // $red: red;
-    //color fix
-    $color: red - ($i * 10);
-    $color2: blue - ($i * 10); 
-    // $color: red;
-    // $color2: blue;
+$totalElements: 20;
+
+@for $i from 1 through $totalElements { // 20 being the total number of elements
+
+    // math is in here to get the 'red' and 'blue' to their original tones
+    $hueVariance: $i * 10;
+    $color: blue - ($hueVariance);
+    $color2: red - ($hueVariance); 
 
     body {
         background: black;
     }
        
     .speaker:nth-of-type(#{$i}) {
-        width: (.1 * $i * 120) + vmin;
-        height: (.1 * $i * 120) + vmin;
-        animation-delay: 0.0s + ($i / 20);
+        // 120 vmin for overflow, .1 * $i to get a percentage
+        width: ( .1 * $i * (100 + $totalElements) ) + vmin;
+        height: ( .1 * $i * (100 + $totalElements) ) + vmin;
+        animation-delay: 0.0s + ($i / $totalElements);
         z-index: 11 - $i;
-        // background: $color + ($i * 10);   
-        // border: 1px solid;     
-        // border-width: $border-width + (0.5 * $i);            
     }
     @keyframes undulate {
         0% {
-            // transform: translateX(-50%) translateY(-50%) scale(1);
-            // border-width: $border-width;
-            // border-color: $color2 + ($i * 10); 
-            background: $color + ($i * 10);      
+            background: $color + ($hueVariance);      
             border-radius: 50%; 
         }
 
         50% {
-            // transform: translateX(-50%) translateY(-50%) scale(1 + (.02 * $i) );
-            // border-width: $border-width + (0.1 * $i);             
-            // border-width: $border-width + (0.5 * $i);            
-            // border-color: $color + ($i * 10);  
-            background: $color2 + ($i * 10); 
+            background: $color2 + ($hueVariance); 
             border-radius: 50%;     
         }
 
         100% {
-            // transform: translateX(-50%) translateY(-50%) scale(1);
-            // border-width: $border-width;
-            // border-color: $color2 + ($i * 10); 
-            background: $color + ($i * 10);  
+            background: $color + ($hueVariance);  
             border-radius: 50%;     
         }
     }         
