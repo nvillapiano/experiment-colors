@@ -13,6 +13,7 @@ html, body {
 .speaker {
     @include absolute-center;
     background: black;
+    border-radius: 50%;     
 
     &.animate {
         animation: undulate 5s infinite;
@@ -21,38 +22,30 @@ html, body {
 
 $totalElements: 20;
 
-@for $i from 1 through $totalElements { // 20 being the total number of elements
+@for $i from 1 through $totalElements {
 
-    // math is in here to get the 'red' and 'blue' to their original tones
     $hueVariance: $i * 10;
     $color: blue - ($hueVariance);
     $color2: red - ($hueVariance); 
 
-    body {
-        background: black;
-    }
-       
     .speaker:nth-of-type(#{$i}) {
-        // 120 vmin for overflow, .1 * $i to get a percentage
         width: ( .1 * $i * (100 + $totalElements) ) + vmin;
         height: ( .1 * $i * (100 + $totalElements) ) + vmin;
         animation-delay: 0.0s + ($i / $totalElements);
-        z-index: 11 - $i;
+        z-index: $totalElements + 1 - $i;
     }
+
     @keyframes undulate {
         0% {
             background: $color + ($hueVariance);      
-            border-radius: 50%; 
         }
 
         50% {
             background: $color2 + ($hueVariance); 
-            border-radius: 50%;     
         }
 
         100% {
             background: $color + ($hueVariance);  
-            border-radius: 50%;     
         }
     }         
 }
