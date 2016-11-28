@@ -13,24 +13,23 @@ html, body {
 .speaker {
     @include absolute-center;
     background: black;
-    border-radius: 50%;     
+    border-radius: 50%;
 
     &.animate {
-        animation: undulate 5s infinite;
+        animation: colorFade 5s infinite;
     }
 }
 
 $totalElements: 20;
+// $hueVariance: $i * 10;
+$color: blue;
+$color2: red;
 
 @for $i from 1 through $totalElements {
 
-    $hueVariance: $i * 10;
-    $color: blue - ($hueVariance);
-    $color2: red - ($hueVariance); 
-
     .speaker:nth-of-type(#{$i}) {
-        // Basically growing each element at an incremental rate. 
-        // The + $totalElements is to make sure we're fully filling the viewport. 
+        // Basically growing each element at an incremental rate.
+        // The + $totalElements is to make sure we're fully filling the viewport.
         // The output of this math is more or less just an incrementally climbing percentage, in this case going from 12vmin -> 240vmin.
         width: ( .1 * $i * (100 + $totalElements) ) + vmin;
         height: ( .1 * $i * (100 + $totalElements) ) + vmin;
@@ -39,22 +38,21 @@ $totalElements: 20;
         // Properly layering the dom elements.
         z-index: $totalElements + 1 - $i;
     }
-
-    // Just going incrementally from color one to color2 and back. Also aids in the cool ripple effect.
-    @keyframes undulate {
-        0% {
-            background: $color + ($hueVariance);      
-        }
-
-        50% {
-            background: $color2 + ($hueVariance); 
-        }
-
-        100% {
-            background: $color + ($hueVariance);  
-        }
-    }         
 }
 
-// TODO: Animating background color is expensive. 
+@keyframes colorFade {
+    0% {
+        background: $color;
+    }
+
+    50% {
+        background: $color2;
+    }
+
+    100% {
+        background: $color;
+    }
+}
+
+// TODO: Animating background color is expensive.
 // Explore absolutely positioning a pseudo element on top of each dom and animating opacity instead.
