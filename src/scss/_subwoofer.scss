@@ -29,12 +29,18 @@ $totalElements: 20;
     $color2: red - ($hueVariance); 
 
     .speaker:nth-of-type(#{$i}) {
+        // Basically growing each element at an incremental rate. 
+        // The + $totalElements is to make sure we're fully filling the viewport. 
+        // The output of this math is more or less just an incrementally climbing percentage, in this case going from 12vmin -> 240vmin.
         width: ( .1 * $i * (100 + $totalElements) ) + vmin;
         height: ( .1 * $i * (100 + $totalElements) ) + vmin;
+        // Incremental increase in animation delay. Makes the cool ripple effect.
         animation-delay: 0.0s + ($i / $totalElements);
+        // Properly layering the dom elements.
         z-index: $totalElements + 1 - $i;
     }
 
+    // Just going incrementally from color one to color2 and back. Also aids in the cool ripple effect.
     @keyframes undulate {
         0% {
             background: $color + ($hueVariance);      
@@ -49,3 +55,6 @@ $totalElements: 20;
         }
     }         
 }
+
+// TODO: Animating background color is expensive. 
+// Explore absolutely positioning a pseudo element on top of each dom and animating opacity instead.
